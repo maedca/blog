@@ -14,3 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('articles', 'articlesController'); //Este metodo crea rutas por defecto para, registrar, ver, editar y eliminar
+
+Route::get('article/{slug}', [					//De esta manera creamos una ruta personalizada
+	'uses'	=> 'articlesController@show',		//La ruta por defecto muestra los articulos por id
+	'as'	=> 'article.ver',					//Con esta ruta podemos mostrar los articulos por su slug.
+
+]);

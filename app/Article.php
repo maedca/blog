@@ -11,15 +11,23 @@ class Article extends Model
 
     use Sluggable;
     protected $table = 'articles';
-    protected $fillable = ['title','content', 'category_id', 'user_id'];
-    public function sluggable()
+    protected $fillable = [
+        'title',
+        'slug', // Los slugs se agregan como un campo mas en la tabla 
+        'content', 
+        'category_id', 
+        'user_id'];
+    
+    // Esta Funcion ya no se usara...
+    /*public function sluggable()
     {
         return [
             'slug' => [
                 'source' => 'title'
             ]
         ];
-    }
+    }*/
+
     public function category()
     {
         return $this->belongsTo('App\Category');
