@@ -6,20 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 //use Cviebrock\EloquentSluggable\Sluggable;
 
 
+/**
+ * @property string content
+ */
 class Article extends Model
 {
 
-    use Sluggable;
+
     protected $table = 'articles';
-    protected $fillable = ['title','content', 'category_id', 'user_id'];
-    public function sluggable()
+    protected $fillable = ['title','slug','content', 'category_id', 'user_id'];
+   /* public function sluggable()
     {
         return [
             'slug' => [
                 'source' => 'title'
             ]
         ];
-    }
+    }*/
     public function category()
     {
         return $this->belongsTo('App\Category');

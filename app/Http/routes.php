@@ -14,3 +14,18 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::resource('articles', 'ArticlesController');
+
+//Route::get('article/{slug}', [                    //De esta manera creamos una ruta personalizada
+//    'uses' => 'articlesController@show',        //La ruta por defecto muestra los articulos por id
+//    'as' => 'article.ver',                    //Con esta ruta podemos mostrar los articulos por su slug.
+//]);
+Route::group(['prefix'=>'admin'], function(){
+    Route::resource('users', 'UsersController');
+    Route::get('users/{id}/destroy',[
+        'uses'=>'UsersController@destroy',
+        'as'=>'admin.users.destroy'
+    ]);
+});
