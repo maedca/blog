@@ -22,10 +22,40 @@ Route::resource('articles', 'ArticlesController');
 //    'uses' => 'articlesController@show',        //La ruta por defecto muestra los articulos por id
 //    'as' => 'article.ver',                    //Con esta ruta podemos mostrar los articulos por su slug.
 //]);
-Route::group(['prefix'=>'admin'], function(){
+Route::group(['prefix' => 'admin', 'middleware'=>'auth'], function () {
     Route::resource('users', 'UsersController');
-    Route::get('users/{id}/destroy',[
-        'uses'=>'UsersController@destroy',
-        'as'=>'admin.users.destroy'
+    Route::get('users/{id}/destroy', [
+        'uses' => 'UsersController@destroy',
+        'as' => 'admin.users.destroy'
+    ]);
+    Route::resource('categories','CategoriesController');
+    Route::get('categories/{id}/destroy',[
+        'uses'=>'CategoriesController@destroy',
+        'as'=>'admin.categories.destroy'
     ]);
 });
+
+/*// Authentication routes...
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', ['as' =>'auth/login', 'uses' => 'Auth\AuthController@postLogin']);
+Route::get('auth/logout', ['as' => 'auth/logout', 'uses' => 'Auth\AuthController@getLogout']);
+
+// Registration routes...
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::post('auth/register', ['as' => 'auth/register', 'uses' => 'Auth\AuthController@postRegister']);*/
+
+Route::get('admin/auth/login', [
+    'uses' => 'Auth\AuthController@getLogin',
+    'as' => 'admin.auth.login'
+]);
+Route::post('admin/auth/login', [
+    'uses' => 'Auth\AuthController@postLogin',
+    'as' => 'admin.auth.login'
+]);
+Route::get('admin/auth/logout', [
+    'uses' => 'Auth\AuthController@getLogout',
+    'as' => 'admin.auth.logout'
+]);
+
+//Route::post('admin/auth/login', 'Auth\AuthController@postLogin');
+//Route::get('admin/auth/logout', 'Auth\AuthController@getLogout');

@@ -14,33 +14,45 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
+                @if(Auth::user())
                 <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
                 <li><a href="{{route('admin.users.index')}}">Usuarios</a></li>
+                <li><a href="{{route('admin.categories.index')}}">Categorias</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+
                     <ul class="dropdown-menu">
                         <li><a href="#">Inicio</a></li>
                         <li><a href="{{route('admin.users.index')}}">Usuarios</a></li>
-                        <li><a href="#">Something else here</a></li>
+                        <li><a href="{{route('admin.categories.index')}}">Categorias</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="#">Separated link</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="#">One more separated link</a></li>
                     </ul>
+                        @endif
                 </li>
             </ul>
-            <form class="navbar-form navbar-left" role="search">
+           {{-- <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Search">
                 </div>
                 <button type="submit" class="btn btn-default">Submit</button>
-            </form>
+            </form>--}}
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Link</a></li>
+                @if(Auth::user())
+                    @else
+                    <li><a href="{{route('admin.auth.login')}}">Ingresar</a></li>
+                    @endif
+                    @if(Auth::user())
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{Auth::user()->name}} <span class="caret"></span></a>
+                    @else
+                        {{--<a href="{{route('admin.auth.login')}}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ingresar<span class="caret"></span></a>--}}
+                    @endif
                     <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
+                        <li><a href="{{route('admin.auth.logout')}}">Salir</a></li>
                         <li><a href="#">Another action</a></li>
                         <li><a href="#">Something else here</a></li>
                         <li role="separator" class="divider"></li>
@@ -48,6 +60,20 @@
                     </ul>
                 </li>
             </ul>
+
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
+{{--
+<div class="container">
+    @if (Session::has('errors'))
+        <div class="alert alert-warning" role="alert">
+            <ul>
+                <strong>Oops! Something went wrong : </strong>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+</div>--}}

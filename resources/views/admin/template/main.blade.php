@@ -16,6 +16,7 @@
 <section>
     <div class="flash-overlay-modal">
     @include('flash::message')
+        @include('admin.template.partials.errors')
     </div>
     @yield('content')
 </section>

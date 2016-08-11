@@ -8,10 +8,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Laracasts\Flash\Flash;
+use App\Http\Requests\UserRequest;
 
 
 class UsersController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -40,7 +42,7 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
 
         $user = new User($request->all());
@@ -86,11 +88,12 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::find($id);
-        $user->name = $request->name;
+        $user->fill($request->all());
+        /*$user->name = $request->name;
         $user->email = $request->email;
-        $user->type = $request->type;
+        $user->type = $request->type;*/
         $user->save();
-        flash()->overlay('Usuario Actualizado: ', 'success');
+        flash()->overlay('Usuario Actualizado: ');
         return redirect()->route('admin.users.index');
     }
 
